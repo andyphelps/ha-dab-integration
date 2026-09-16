@@ -1,11 +1,11 @@
 # ha-dab-integration
 
 A Home Assistant custom component (`custom_components/dab_radio/`) that
-creates a `media_player.dab_radio` entity backed by the `ha-dab-addon`
-controller's REST API (see `../ha-dab-addon/README.md`). Verified to import
-cleanly and use only real, current Home Assistant APIs (checked against a
-freshly installed `homeassistant` package), but **not yet tested inside an
-actual running Home Assistant instance** -- I don't have access to yours yet.
+creates a `media_player.dab_radio` entity and a Media Browser source, both
+backed by the `ha-dab-addon` controller's REST API (see
+`../ha-dab-addon/README.md`). Confirmed working end-to-end against a real
+HAOS instance: scanning 10B/11A/11D/12B found 27 real stations across two
+ensembles (Somerset and BBC National DAB).
 
 ## What it gives you
 
@@ -25,6 +25,13 @@ actual running Home Assistant instance** -- I don't have access to yours yet.
     media_content_type: music
   ```
 - A `dab_radio.scan` service to (re)scan the configured channels on demand.
+- A **Media Browser** source (`media_source.py`): stations show up under
+  *Media -> DAB Radio* in the sidebar, grouped by ensemble (e.g. "Somerset",
+  "BBC National DAB") -- deliberately **not** by the underlying DAB
+  channel/multiplex code (10B, 12B, ...), since that's internal plumbing
+  nobody browsing for a station cares about. Picking a station there tunes
+  the receiver and lets you "Play on" any real speaker directly from the
+  browse UI, the same flow as the built-in Radio Browser integration.
 
 There's deliberately no signal-strength/SNR sensor yet -- easy to add later
 (the add-on's `/status` could pass through welle-cli's own `/mux.json` SNR
