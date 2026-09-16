@@ -13,6 +13,7 @@ import logging
 from typing import Any
 
 from homeassistant.components.media_player import (
+    MediaPlayerDeviceClass,
     MediaPlayerEntity,
     MediaPlayerEntityFeature,
     MediaPlayerState,
@@ -41,6 +42,14 @@ class DabRadioMediaPlayer(CoordinatorEntity[DabRadioCoordinator], MediaPlayerEnt
     _attr_name = "DAB Radio"
     _attr_supported_features = MediaPlayerEntityFeature.SELECT_SOURCE | MediaPlayerEntityFeature.PLAY_MEDIA
     _attr_media_content_type = MediaType.MUSIC
+    # RECEIVER (not the default/unset) so HA's HomeKit Bridge exposes this as
+    # a proper Television/Remote-style accessory with a real source picker,
+    # instead of falling back to a plain "series of switches" -- HomeKit
+    # only does that upgrade for TV/RECEIVER/PROJECTOR device classes (see
+    # homeassistant/components/homekit/accessories.py). RECEIVER fits a
+    # radio tuner better than TV semantically, and both hit the same richer
+    # accessory path.
+    _attr_device_class = MediaPlayerDeviceClass.RECEIVER
 
     def __init__(self, coordinator: DabRadioCoordinator, entry_id: str) -> None:
         super().__init__(coordinator)
