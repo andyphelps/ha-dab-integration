@@ -1,0 +1,26 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to DAB Radio add-on",
+        "description": "Enter the network address of the DAB Radio add-on's controller API (port 9000 by default).",
+        "data": {
+          "host": "Host",
+          "port": "Port"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the DAB Radio add-on at that address."
+    },
+    "abort": {
+      "already_configured": "This DAB Radio add-on is already configured."
+    }
+  },
+  "services": {
+    "scan": {
+      "name": "Scan channels",
+      "description": "Re-scan the configured DAB channels and refresh the station list."
+    }
+  }
+}

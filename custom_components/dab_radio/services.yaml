@@ -1,0 +1,5 @@
+scan:
+  name: Scan channels
+  description: >-
+    Re-scan the configured DAB channels and refresh the station list.
+    Takes roughly 30-90 seconds (a few seconds of sync time per channel).
